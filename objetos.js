@@ -150,4 +150,4 @@ class Coordinate {
     }
 }
 
-export { Dish, Category, Allergen, Menu, Restaurant, Coordinate };
+// export { Dish, Category, Allergen, Menu, Restaurant, Coordinate};
