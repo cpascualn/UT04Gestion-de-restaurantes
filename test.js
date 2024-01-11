@@ -9,13 +9,14 @@ function test() {
     cats = manager.categories;
     let categoria;
     for (const cat of cats) {
+        console.log(cat);
         if (cat.name === 'categ') {
             categoria = cat;
         }
     }
-    
-    manager.assignCategoryToDish(categoria, dish);
 
+    manager.assignCategoryToDish(categoria, dish);
+    manager.deassignCategoryToDish(categoria, dish);
     console.log(manager);
 }
 

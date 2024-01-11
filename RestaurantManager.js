@@ -44,7 +44,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         return {
                             *[Symbol.iterator]() {
                                 for (const arrayMenu of array) {
-                                    yield arrayMenu.menu;
+                                    yield arrayMenu;
                                 }
                             },
                         };
@@ -58,7 +58,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         return {
                             *[Symbol.iterator]() {
                                 for (const arrayAl of array) {
-                                    yield arrayAl.allergen;
+                                    yield arrayAl;
                                 }
                             },
                         };
@@ -73,7 +73,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         return {
                             *[Symbol.iterator]() {
                                 for (const arrayRes of array) {
-                                    yield arrayRes.restaurant;
+                                    yield arrayRes;
                                 }
                             },
                         };
@@ -87,8 +87,9 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             };
 
             removeCategory(category) {
-                index = this.#categories.indexOf(category);
+                let index = this.#categories.indexOf(category);
                 this.#categories.splice(index, 1);
+
                 return this;
             };
 
@@ -101,7 +102,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             };
 
             removeMenu(Menu) {
-                index = this.#menus.indexOf(Menu);
+                let index = this.#menus.indexOf(Menu);
                 this.#menus.splice(index, 1);
                 return this;
             };
@@ -112,7 +113,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             }
 
             removeAllergen(allergen) {
-                index = this.#allergens.indexOf(allergen);
+                let index = this.#allergens.indexOf(allergen);
                 this.#allergens.splice(index, 1);
                 return this;
             };
@@ -128,7 +129,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
 
             removeDish(dish) {
                 // find index con la funcion que busque por el dish y asi en todo
-                index = this.#dishes.indexOf(dish);
+                let index = this.#dishes.indexOf(dish);
                 this.#dishes.splice(index, 1);
                 return this;
             }
@@ -139,7 +140,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             }
 
             removeRestaurant(Restaurant) {
-                index = this.#restaurants.indexOf(Restaurant);
+                let index = this.#restaurants.indexOf(Restaurant);
                 this.#restaurants.splice(index, 1);
                 return this;
             }
@@ -166,13 +167,12 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 let dispos = this.#dishes.findIndex(d => d.dish === dish);
                 if (dispos === -1) {
                     // excepcion
-                    dispos = this.#dishes.findIndex(d => d.dish === dish);
                 }
-                cat = this.#categories.indexOf(category);
+                let cat = this.#categories.indexOf(category);
                 if (cat === -1) {
                     // excepcion
                 }
-                index = this.#dishes[dispos].indexOf(category);
+                let index = this.#dishes[dispos].categories.indexOf(category);
                 this.#dishes[dispos].categories.splice(index, 1);
                 return this;
             }
@@ -183,7 +183,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                     this.addDish(dish);
                     dispos = this.#dishes.findIndex(d => d.dish === dish);
                 }
-                al = this.#allergens.indexOf(allergen);
+                let al = this.#allergens.indexOf(allergen);
                 if (al === -1) {
                     this.addAllergen(allergen);
                     al = this.#allergens.indexOf(allergen);
@@ -199,11 +199,11 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                     // excepcion
                     dispos = this.#dishes.findIndex(d => d.dish === dish);
                 }
-                al = this.#allergens.indexOf(allergen);
+                let al = this.#allergens.indexOf(allergen);
                 if (al === -1) {
                     // excepcion
                 }
-                index = this.#dishes[dispos].indexOf(allergen);
+                let index = this.#dishes[dispos].indexOf(allergen);
                 this.#dishes[dispos].allergens.splice(index, 1);
                 return this;
             }
