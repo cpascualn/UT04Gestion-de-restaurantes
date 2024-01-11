@@ -3,10 +3,20 @@
 function test() {
 
     manager = RestaurantsManager.getInstance();
-    cat1 = new Category("prueba1", "descripcion1");
-    manager.addCategory(cat1);
 
+    dish = manager.createDish('preuba', 'descrip', ['ing1', 'ing2'], 'image');
+    manager.addCategory(new Category('categ'));
+    cats = manager.categories;
+    let categoria;
+    for (const cat of cats) {
+        if (cat.name === 'categ') {
+            categoria = cat;
+        }
+    }
+    
+    manager.assignCategoryToDish(categoria, dish);
 
+    console.log(manager);
 }
 
 test();
