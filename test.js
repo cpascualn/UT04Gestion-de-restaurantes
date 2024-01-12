@@ -5,6 +5,7 @@ function test() {
     manager = RestaurantsManager.getInstance();
 
     dish = manager.createDish('preuba', 'descrip', ['ing1', 'ing2'], 'image');
+    dish2 = manager.createDish('preuba3', 'descrip', ['ing1', 'ing2'], 'image');
     manager.addCategory(new Category('categ'));
     cats = manager.categories;
     let categoria;
@@ -16,7 +17,10 @@ function test() {
     }
 
     manager.assignCategoryToDish(categoria, dish);
-    manager.deassignCategoryToDish(categoria, dish);
+    manager.assignCategoryToDish(categoria, dish2);
+    // si llamas a remove pasa con objeto literal
+     manager.removeCategory(categoria);
+    //  manager.deassignCategoryToDish(categoria, dish);
     console.log(manager);
 }
 

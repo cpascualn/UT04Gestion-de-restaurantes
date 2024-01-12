@@ -87,6 +87,14 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             };
 
             removeCategory(category) {
+                // buscar todos los dish que tengan esta categoria y desasignarlos
+                this.#dishes.forEach(dish => {
+                    let index = dish.categories.findIndex(cat => cat.name === category.name);
+                    if (index != -1) {
+                        this.deassignCategoryToDish(dish.categories[index], dish.dish);
+                    }
+                });
+
                 let index = this.#categories.indexOf(category);
                 this.#categories.splice(index, 1);
 
@@ -129,6 +137,8 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
 
             removeDish(dish) {
                 // find index con la funcion que busque por el dish y asi en todo
+
+
                 let index = this.#dishes.indexOf(dish);
                 this.#dishes.splice(index, 1);
                 return this;
@@ -158,8 +168,8 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                     this.addCategory(category);
                     cat = this.#categories.indexOf(category);
                 }
-                cat = this.#categories[cat];
-                this.#dishes[dispos].categories.push(cat);
+                // cat = this.#categories[cat];
+                this.#dishes[dispos].categories.push(category);
                 return this;
             }
 
@@ -172,8 +182,9 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 if (cat === -1) {
                     // excepcion
                 }
-                let index = this.#dishes[dispos].categories.indexOf(category);
-                this.#dishes[dispos].categories.splice(index, 1);
+                let categorias = this.#dishes[dispos].categories;
+                let index = categorias.findIndex((categ) => categ.name === category.name);
+                categorias.splice(index, 1);
                 return this;
             }
 
