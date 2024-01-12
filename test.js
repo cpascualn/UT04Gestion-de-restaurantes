@@ -18,7 +18,6 @@ function test() {
 
     manager.assignCategoryToDish(categoria, dish);
     manager.assignCategoryToDish(categoria, dish2);
-    // si llamas a remove pasa con objeto literal
      manager.removeCategory(categoria);
     //  manager.deassignCategoryToDish(categoria, dish);
     console.log(manager);

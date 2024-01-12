@@ -86,18 +86,19 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 return this;
             };
 
-            removeCategory(category) {
-                // buscar todos los dish que tengan esta categoria y desasignarlos
-                this.#dishes.forEach(dish => {
-                    let index = dish.categories.findIndex(cat => cat.name === category.name);
-                    if (index != -1) {
-                        this.deassignCategoryToDish(dish.categories[index], dish.dish);
-                    }
-                });
+            removeCategory(...categorys) {
+                for (const category of categorys) {
+                    // buscar todos los dish que tengan esta categoria y desasignarlos
+                    this.#dishes.forEach(dish => {
+                        let index = dish.categories.findIndex(cat => cat.name === category.name);
+                        if (index != -1) {
+                            this.deassignCategoryToDish(dish.categories[index], dish.dish);
+                        }
+                    });
 
-                let index = this.#categories.indexOf(category);
-                this.#categories.splice(index, 1);
-
+                    let index = this.#categories.indexOf(category);
+                    this.#categories.splice(index, 1);
+                }
                 return this;
             };
 
