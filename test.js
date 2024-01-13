@@ -1,13 +1,14 @@
-// import { Dish, Category, Allergen, Menu, Restaurant, Coordinate, RestaurantsManager } from './RestaurantManager';
+import { Dish, Category, Allergen, Menu, Restaurant, Coordinate } from './objetos.js';
+import { RestaurantsManager } from './RestaurantManager.js';
 
 function test() {
 
-    manager = RestaurantsManager.getInstance();
+    let manager = RestaurantsManager.getInstance();
 
-    dish = manager.createDish('preuba', 'descrip', ['ing1', 'ing2'], 'image');
-    dish2 = manager.createDish('preuba3', 'descrip', ['ing1', 'ing2'], 'image');
+    let dish = manager.createDish('preuba', 'descrip', ['ing1', 'ing2'], 'image');
+    let dish2 = manager.createDish('preuba3', 'descrip', ['ing1', 'ing2'], 'image');
     manager.addCategory(new Category('categ'));
-    cats = manager.categories;
+    let cats = manager.categories;
     let categoria;
     for (const cat of cats) {
         console.log(cat);
@@ -16,9 +17,10 @@ function test() {
         }
     }
 
-    manager.assignCategoryToDish(categoria, dish);
-    manager.assignCategoryToDish(categoria, dish2);
-     manager.removeCategory(categoria);
+    // manager.assignCategoryToDish(categoria, dish).assignCategoryToDish(categoria, dish2);
+    manager.assignCategoryToDish(categoria, dish, dish2);
+    manager.removeCategory(categoria);
+    manager.removeDish(dish2);
     //  manager.deassignCategoryToDish(categoria, dish);
     console.log(manager);
 }
