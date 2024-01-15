@@ -28,6 +28,8 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 this.#menus = menus;
                 this.#restaurants = restaurants;
 
+
+
                 // getter de categories devuelve el iterador
                 Object.defineProperty(this, 'categories', {
                     enumerable: true,
@@ -89,6 +91,24 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         };
                     },
                 });
+
+                // getter de dishes devuelve el iterador
+                Object.defineProperty(this, 'dishes', {
+                    enumerable: true,
+                    get() {
+                        const array = this.#dishes;
+                        // devolver el iterador
+                        return {
+                            // metodo generador,recorre el array de platos devolviendo cada instancia al iterador
+                            *[Symbol.iterator]() {
+                                for (const arrayDish of array) {
+                                    yield arrayDish;
+                                }
+                            },
+                        };
+                    },
+                });
+
             }
 
             // recibe 1 o varias categorias,si ha cumplido todas las comprobaciones , por cada una la añade como objeto de la clase Category al array de categorias
@@ -199,7 +219,9 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                     if (this.#dishes.findIndex(d => d.dish.name === dish.name) === -1) throw new DishNotRegisterdException();
                     this.#menus.forEach(menu => {
                         let actdish = menu.dishes.findIndex(d => d.dish.name === dish.name);
-                        this.deassignDishToMenu(menu.menu, menu.dishes[actdish].dish);
+                        if (actdish !== -1) {
+                            this.deassignDishToMenu(menu.menu, menu.dishes[actdish].dish);
+                        }
                     });
                     let index = this.#dishes.findIndex(d => d.dish.name === dish.name);
                     this.#dishes.splice(index, 1);
@@ -283,8 +305,8 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                     if (al === -1) {
                         this.addAllergen(allergen);
                         al = this.#allergens.indexOf(allergen);
-                        al = this.#allergens[al];
                     }
+                    al = this.#allergens[al];
                     this.#dishes[dispos].allergens.push(al);
                 }
                 return this;
@@ -366,7 +388,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 return this;
             }
             // recibe categoria y la funcion de ordenacion, si no recibe niguna por defecto la ordena ascendente
-            getDishesInCategory(category, ordenacion = ((a, b) => a - b)) {
+            getDishesInCategory(category, ordenacion = ((a, b) => a.dish.name.localeCompare(b.dish.name))) {
                 if (category === null) throw new NullCategoryException();
                 if (this.#categories.findIndex(c => c.name === category.name) === -1) throw new CategoryNotRegisterdException();
                 let platos = [];
@@ -383,7 +405,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                             yield dishCat;
                         }
                     }, // funcion para poder ordenar , usa la funcion de ordenacion recibida
-                    ordernar() {
+                    ordenar() {
                         // usando la funcion de comparacion ordenara el array
                         platos.sort(ordenacion);
                     },
@@ -391,7 +413,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             }
 
             // busca los platos que tengan el alergeno buscaod
-            getDishesWithAllergen(allergen, ordenacion = ((a, b) => a - b)) {
+            getDishesWithAllergen(allergen, ordenacion = ((a, b) => a.dish.name.localeCompare(b.dish.name))) {
                 if (allergen === null) throw new NullAllergenException();
                 if (this.#allergens.findIndex(a => a.name === allergen.name) === -1) throw new AllergenNotRegisterdException();
                 let platos = [];
@@ -407,7 +429,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         for (const dishCat of platos) {
                             yield dishCat;
                         }
-                    }, ordernar() {
+                    }, ordenar() {
                         // usando la funcion de comparacion ordenara el array
                         platos.sort(ordenacion);
                     },
@@ -415,10 +437,11 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             }
 
             // encontrar platos con el criterio de busqueda, ejemplo: encontrar platos que tengan 2 o mas alergenos
-            findDishes(dish, callback, ordenacion = ((a, b) => a - b)) {
+            findDishes(dish, callback, ordenacion = ((a, b) => a.dish.name.localeCompare(b.dish.name))) {
                 if (dish === null) throw new NullDishException();
                 if (this.#dishes.findIndex(d => d.dish.name === dish.name) === -1) throw new DishNotRegisterdException();
-                // ejemplo de una callback  ( d => d.allergens.lenght >= 2 )
+                // ejemplo de una callback  ( d => d.allergens.length >= 2 )
+
                 let platos = this.#dishes.filter(callback);
 
                 return { // devuelve el iterador de platos con el criterio de busqueda 
@@ -426,10 +449,10 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                         for (const dishCat of platos) {
                             yield dishCat;
                         }
-                    }, ordernar() {
+                    }, ordenar() {
                         // usando la funcion de comparacion ordenara el array
                         platos.sort(ordenacion);
-                    },
+                    }
                 };
             }
 
@@ -460,6 +483,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             // crea el alergeno y lo añade al array de alergenos, comprueba que ya exista, si ya existe no lo crea. devuelve el alergeno creado
             createAllergen(name = '', description = '') {
                 let alpos = this.#allergens.findIndex(al => al.name === name);
+                console.log(alpos);
                 if (alpos === -1) {
                     let allergen = new Allergen(name, description);
                     this.addAllergen(allergen);
