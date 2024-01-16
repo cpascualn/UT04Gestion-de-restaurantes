@@ -483,7 +483,6 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             // crea el alergeno y lo añade al array de alergenos, comprueba que ya exista, si ya existe no lo crea. devuelve el alergeno creado
             createAllergen(name = '', description = '') {
                 let alpos = this.#allergens.findIndex(al => al.name === name);
-                console.log(alpos);
                 if (alpos === -1) {
                     let allergen = new Allergen(name, description);
                     this.addAllergen(allergen);

@@ -150,18 +150,70 @@ function testCreateRemove() {
 
 
 function testExceptions() {
+    console.log("EXCEPCIONES");
+    try {
+        manager.addCategory(null);
+    } catch (error) {
+        console.error(error);
+    }
 
+    try {
+        manager.addCategory('objeto');
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        manager.addCategory(new Category('category1', 'descrip'));
+    } catch (error) {
+        console.error(error);
+    }
+    try {
+        manager.removeCategory(new Category('categor', 'descrip'));
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        let men;
+        let dis;
+        for (const menu of manager.menus) {
+            if (menu.menu.name === 'menu2') men = menu.menu;
+        }
+        for (const dish of manager.dishes) {
+            if (dish.dish.name === "bplato1") dis = dish.dish;
+        }
+        manager.changeDishesPositionsInMenu(men, dis, dis);
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        manager.addAllergen(null);
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        manager.addDish(null);
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        manager.addMenu(null);
+    } catch (error) {
+        console.error(error);
+    }
 }
-
-
-
 
 function test() {
 
     testCreateRemove();
+    console.log(manager);
     testExceptions();
 
-    console.log(manager);
+
 }
 
 test();
