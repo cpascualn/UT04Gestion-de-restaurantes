@@ -8,31 +8,31 @@ function testGetters() {
     console.log("----getter de dishes----");
     let dishes = manager.dishes;
     for (const dish of dishes) {
-        console.log(dish);
+        console.log(JSON.stringify(dish));
     }
 
     console.log("----getter de categories----");
     let categs = manager.categories;
     for (const cat of categs) {
-        console.log(cat);
+        console.log(cat.toString());
     }
 
     console.log("----getter de menus----");
     let menus = manager.menus;
     for (const menu of menus) {
-        console.log(menu);
+        console.log(JSON.stringify(menu));
     }
 
     console.log("----getter de alergenos----");
     let allergens = manager.allergens;
     for (const allergen of allergens) {
-        console.log(allergen);
+        console.log(allergen.toString());
     }
 
     console.log("----getter de restaurantes----");
     let restaurants = manager.restaurants;
     for (const restaurant of restaurants) {
-        console.log(restaurant);
+        console.log(restaurant.toString());
     }
 }
 
@@ -212,7 +212,6 @@ function test() {
     testCreateRemove();
     console.log(manager);
     testExceptions();
-
 
 }
 

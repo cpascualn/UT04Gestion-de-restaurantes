@@ -514,7 +514,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
 
         }
         let instance = new RestaurantsManager();//Devolvemos el objeto RestaurantsManager para que sea una instancia única.
-        Object.freeze(instance);
+        // Object.freeze(instance);
         return instance;
     } //Fin inicialización del Singleton
     return {
